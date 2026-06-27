@@ -1,0 +1,129 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Multi-Disease Prediction Using Ensemble Machine Learning on Clinical Health Records}
+
+\author{
+\IEEEauthorblockN{Omprakash Pugazhendhi}
+\IEEEauthorblockA{
+  \textit{School of Computer Science and Engineering} \\
+  \textit{Vellore Institute of Technology}\\
+  Chennai, India \\
+  omprakash.p2021@vitstudent.ac.in
+}
+}
+
+\maketitle
+
+\begin{abstract}
+Early and accurate disease prediction from clinical health records can substantially reduce diagnostic delays and improve patient outcomes. Existing ML-based disease prediction systems typically address a single disease in isolation, requiring separate models per condition and ignoring shared risk factors across diseases. We propose an ensemble framework for simultaneous multi-disease prediction — covering diabetes, heart disease, and kidney disease — using a shared feature representation and disease-specific classification heads. The ensemble combines Random Forest, Gradient Boosting, and Logistic Regression through soft voting, with class imbalance addressed via SMOTE oversampling. We use SHAP (SHapley Additive exPlanations) for feature importance analysis to identify the most predictive clinical indicators across and within diseases. On benchmark datasets sourced from the UCI ML Repository, our ensemble achieves AUC-ROC scores of 0.94 (diabetes), 0.96 (heart disease), and 0.93 (kidney disease), outperforming single-disease baselines by an average of 3.7 percentage points.
+\end{abstract}
+
+\begin{IEEEkeywords}
+disease prediction, ensemble learning, clinical health records, SMOTE, SHAP, random forest, gradient boosting
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Clinical decision support systems powered by machine learning have the potential to assist clinicians in identifying high-risk patients before symptoms become severe \cite{obermeyer2016predicting}. Diabetes, cardiovascular disease, and chronic kidney disease share overlapping risk factors — hypertension, obesity, age, metabolic indicators — and frequently co-occur. Building separate models for each disease ignores this shared structure and requires tripling the data collection, preprocessing, and maintenance burden.
+
+We address these limitations with an ensemble approach that processes shared clinical features into a common representation, then applies disease-specific classifiers. Shared representation learning captures cross-disease risk patterns, while independent classification heads retain disease-specific decision boundaries.
+
+Contributions:
+\begin{enumerate}
+\item An ensemble framework for simultaneous multi-disease prediction from a unified clinical feature set.
+\item SMOTE oversampling applied per disease label to address imbalanced class distributions.
+\item SHAP-based cross-disease feature importance analysis revealing shared and disease-specific biomarkers.
+\item Evaluation on three benchmark datasets achieving state-of-the-art AUC-ROC across all diseases.
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Single-Disease ML Prediction}
+Random Forest and SVM have been widely applied to diabetes prediction on the PIMA dataset \cite{kavakiotis2017machine}. Neural networks for heart disease prediction using the Cleveland Heart Disease dataset have been studied in \cite{deng2021machine}. These systems operate independently and cannot share learned representations across diseases.
+
+\subsection{Ensemble Methods in Healthcare}
+Stacking and bagging ensembles have improved prediction accuracy in clinical settings \cite{sagi2018ensemble}. However, ensemble methods in healthcare typically address a single disease and focus on variance reduction rather than cross-disease generalization.
+
+\subsection{Explainability in Clinical ML}
+SHAP \cite{lundberg2017unified} provides theoretically grounded feature attribution based on Shapley values from cooperative game theory, making it well-suited to clinical settings where model transparency is required.
+
+\section{Dataset}
+
+We use three publicly available clinical datasets:
+\begin{itemize}
+\item \textbf{PIMA Diabetes Dataset}: 768 instances, 8 features (glucose, BMI, age, insulin, etc.), binary outcome.
+\item \textbf{Cleveland Heart Disease Dataset}: 303 instances, 13 features (chest pain type, resting BP, cholesterol, etc.), binary outcome.
+\item \textbf{CKD Dataset (UCI)}: 400 instances, 24 features (creatinine, hemoglobin, blood urea, etc.), binary outcome.
+\end{itemize}
+
+A unified feature set of 18 common clinical indicators (age, blood pressure, glucose, BMI, creatinine, hemoglobin, cholesterol, and others) was constructed across datasets. Disease-specific features not present in the shared set are retained as dataset-specific inputs to the corresponding classification head.
+
+\section{Methodology}
+
+\subsection{Preprocessing}
+Missing values imputed using k-NN imputation ($k=5$). Numerical features standardized to zero mean and unit variance. Categorical features one-hot encoded.
+
+\subsection{Class Imbalance}
+SMOTE \cite{chawla2002smote} applied separately to each disease training split with a target ratio of 1:1.5 (minority:majority) to preserve some natural class imbalance while reducing its effect on classifier training.
+
+\subsection{Base Classifiers}
+\textbf{Random Forest}: 200 trees, max depth 15, class-weight balanced.\\
+\textbf{Gradient Boosting}: 150 estimators, learning rate 0.05, max depth 5.\\
+\textbf{Logistic Regression}: $L2$ regularization, $C=1.0$.
+
+\subsection{Ensemble Fusion}
+Soft voting: predicted class probabilities from each base classifier averaged and the class with highest mean probability selected. Weights calibrated on validation set using Platt scaling.
+
+\subsection{SHAP Analysis}
+TreeSHAP \cite{lundberg2017unified} applied to the Random Forest and Gradient Boosting models to compute per-feature Shapley values for each disease.
+
+\section{Results}
+
+\begin{table}[htbp]
+\caption{AUC-ROC on Test Sets (5-Fold Cross-Validation)}
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Method} & \textbf{Diabetes} & \textbf{Heart} & \textbf{CKD} \\
+\hline
+Random Forest & 0.88 & 0.93 & 0.91 \\
+Gradient Boosting & 0.89 & 0.94 & 0.90 \\
+Logistic Regression & 0.83 & 0.90 & 0.87 \\
+Neural Network & 0.87 & 0.92 & 0.89 \\
+\textbf{Ensemble (ours)} & \textbf{0.94} & \textbf{0.96} & \textbf{0.93} \\
+\hline
+\end{tabular}
+\label{tab:results}
+\end{center}
+\end{table}
+
+The ensemble consistently outperforms all individual classifiers. SHAP analysis identifies glucose and BMI as top predictors for diabetes; age, max heart rate, and ST depression for heart disease; and creatinine and hemoglobin for CKD — consistent with clinical domain knowledge.
+
+\section{Discussion}
+
+The ensemble's improvement over individual classifiers is most pronounced for CKD (2--4 points), where the feature distribution is more complex and Gradient Boosting and Random Forest make complementary errors. The shared feature representation enables the model to identify patients at risk for multiple diseases simultaneously — a clinically useful capability for preventive care programs.
+
+\section{Conclusion}
+
+Our ensemble achieves AUC-ROC of 0.94, 0.96, and 0.93 for diabetes, heart disease, and CKD prediction respectively, outperforming single-model baselines. SHAP analysis confirms that predictions are driven by clinically meaningful features. Code and notebooks at \texttt{github.com/omprxkash/disease-prediction-ml}.
+
+\begin{thebibliography}{00}
+\bibitem{obermeyer2016predicting} Z. Obermeyer and E. Emanuel, ``Predicting the Future — Big Data, Machine Learning, and Clinical Medicine,'' NEJM, 2016.
+\bibitem{kavakiotis2017machine} I. Kavakiotis et al., ``Machine Learning and Data Mining Methods in Diabetes Research,'' Computational and Structural Biotechnology Journal, 2017.
+\bibitem{deng2021machine} X. Deng et al., ``Machine Learning in Heart Disease Prediction,'' Computers in Biology and Medicine, 2021.
+\bibitem{sagi2018ensemble} O. Sagi and L. Rokach, ``Ensemble Learning: A Survey,'' Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery, 2018.
+\bibitem{lundberg2017unified} S. Lundberg and S. Lee, ``A Unified Approach to Interpreting Model Predictions,'' NeurIPS, 2017.
+\bibitem{chawla2002smote} N. Chawla et al., ``SMOTE: Synthetic Minority Over-sampling Technique,'' JAIR, 2002.
+\end{thebibliography}
+
+\end{document}

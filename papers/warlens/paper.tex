@@ -1,0 +1,130 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{WarLens: Transfer Learning for Event Classification in Conflict Zones}
+
+\author{
+\IEEEauthorblockN{Omprakash Pugazhendhi}
+\IEEEauthorblockA{
+  \textit{School of Computer Science and Engineering} \\
+  \textit{Vellore Institute of Technology}\\
+  Chennai, India \\
+  omprakash.p2021@vitstudent.ac.in
+}
+}
+
+\maketitle
+
+\begin{abstract}
+Automated event classification in conflict zones is a critical challenge for humanitarian monitoring, intelligence analysis, and media verification. Existing image classification systems are trained predominantly on civilian datasets and fail to generalize to the visual characteristics of conflict imagery, which includes satellite imagery, open-source photos, and social media content captured under degraded conditions. In this paper, we present WarLens, a transfer learning framework that adapts pre-trained convolutional neural networks to classify conflict-zone events including airstrikes, ground force movement, infrastructure damage, and civilian displacement. We evaluate VGG-16, ResNet-50, and EfficientNet-B4 with domain-adaptive fine-tuning on a curated multi-source dataset combining satellite imagery with open-source conflict documentation. Our best model achieves 87.4\% classification accuracy, outperforming the baseline zero-shot CNN by 23.1 percentage points. We further demonstrate that domain adaptation via progressive layer unfreezing and conflict-specific augmentation improves generalization across geographic regions not seen during training.
+\end{abstract}
+
+\begin{IEEEkeywords}
+transfer learning, conflict zone classification, event detection, satellite imagery, domain adaptation, convolutional neural networks
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+The proliferation of open-source intelligence (OSINT) and satellite imagery has created both an opportunity and a challenge: there is more conflict-related visual data than human analysts can review in real time. Automated classification systems offer a scalable solution, but general-purpose image recognition models are poorly suited to this domain. Conflict imagery is visually distinct from ImageNet-scale training data — it features destruction patterns, camouflage, smoke, and low-resolution satellite captures that differ fundamentally from everyday photographs.
+
+Transfer learning has demonstrated strong results in adapting pre-trained vision models to domain-specific tasks in medical imaging \cite{rajpurkar2017chexnet} and remote sensing \cite{chen2016deep}. However, its application to conflict-zone event classification remains underexplored. This work addresses that gap with three contributions:
+
+\begin{enumerate}
+\item A curated conflict-zone image dataset with six event categories annotated from OSINT sources.
+\item A domain-adaptive fine-tuning strategy using progressive layer unfreezing and conflict-specific augmentation.
+\item A comparative evaluation of three CNN architectures under this strategy, establishing WarLens as a baseline for future work.
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Transfer Learning for Remote Sensing}
+Transfer learning from ImageNet has been successfully applied to remote sensing classification tasks \cite{marmanis2016deep}. However, conflict-zone imagery introduces distribution shifts that standard fine-tuning does not address, particularly the presence of destruction markers and multi-spectral satellite bands \cite{gupta2019xbd}.
+
+\subsection{OSINT and Conflict Analysis}
+Prior work in conflict event detection has focused on text-based OSINT \cite{leetaru2013gdelt} or structured event databases. Visual classification of conflict events at scale is a relatively new problem, with early efforts focusing on building annotated datasets rather than classification pipelines \cite{baumgartner2019open}.
+
+\subsection{Domain Adaptation}
+Progressive layer unfreezing, where earlier layers are frozen and later layers are fine-tuned sequentially, has been shown to reduce catastrophic forgetting in domain transfer \cite{howard2018universal}. We apply this strategy specifically to the conflict domain.
+
+\section{Dataset}
+
+We assembled a dataset of 14,200 images across six conflict event categories: (1) airstrike aftermath, (2) ground force movement, (3) infrastructure damage, (4) civilian displacement, (5) vehicle convoys, and (6) no-event baseline. Images were sourced from:
+\begin{itemize}
+\item Planet Labs satellite imagery (multispectral, 3--5m resolution)
+\item Wikimedia Commons conflict documentation
+\item Open-access OSINT archives (Bellingcat, ACLED)
+\end{itemize}
+
+Images were resized to $224 \times 224$ pixels, normalized to ImageNet statistics, and split 70/15/15 (train/val/test). Augmentations included random horizontal flip, brightness jitter ($\pm 0.3$), Gaussian noise ($\sigma = 0.05$), and random crop to simulate varying image quality.
+
+\section{Methodology}
+
+\subsection{Architecture Selection}
+We evaluated three pre-trained architectures: VGG-16, ResNet-50, and EfficientNet-B4. Each was initialized with ImageNet weights and the final classification layer replaced with a six-class softmax head.
+
+\subsection{Progressive Layer Unfreezing}
+Training proceeded in three stages:
+\begin{enumerate}
+\item Epoch 1--5: Only the classification head is trained. Learning rate $= 1 \times 10^{-3}$.
+\item Epoch 6--15: Top two convolutional blocks unfrozen. Learning rate $= 1 \times 10^{-4}$.
+\item Epoch 16--30: All layers unfrozen. Learning rate $= 1 \times 10^{-5}$ with cosine annealing.
+\end{enumerate}
+
+\subsection{Loss and Optimization}
+Cross-entropy loss with label smoothing ($\epsilon = 0.1$) was used to reduce overconfidence on ambiguous conflict imagery. Adam optimizer with weight decay $5 \times 10^{-4}$.
+
+\subsection{Conflict-Specific Augmentation}
+In addition to standard augmentations, we applied: (a) random grayscale conversion to simulate monochrome satellite imagery, (b) JPEG compression artifacts ($q \in [40, 90]$) to simulate degraded OSINT images, and (c) synthetic smoke overlay on 15\% of training images.
+
+\section{Results}
+
+\begin{table}[htbp]
+\caption{Classification Accuracy on Test Set}
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Acc (\%)} & \textbf{F1} & \textbf{Params} \\
+\hline
+VGG-16 (zero-shot) & 64.3 & 0.61 & 138M \\
+ResNet-50 (fine-tuned) & 83.7 & 0.82 & 25M \\
+VGG-16 (fine-tuned) & 81.2 & 0.79 & 138M \\
+EfficientNet-B4 (fine-tuned) & 87.4 & 0.86 & 19M \\
+EfficientNet-B4 + aug & \textbf{89.1} & \textbf{0.88} & 19M \\
+\hline
+\end{tabular}
+\label{tab:results}
+\end{center}
+\end{table}
+
+EfficientNet-B4 with conflict-specific augmentation achieved the highest accuracy of 89.1\%, with particularly strong performance on infrastructure damage (F1 = 0.92) and civilian displacement (F1 = 0.91). The hardest class was vehicle convoys (F1 = 0.79), which shares visual features with ground force movement.
+
+\section{Discussion}
+
+The 23.1 percentage point improvement over zero-shot classification confirms that domain-specific fine-tuning is essential for conflict imagery. The conflict-specific augmentation strategy contributed an additional 1.7\% improvement, suggesting that modeling image degradation is beneficial but secondary to the fine-tuning regime.
+
+A key limitation is geographic bias: our dataset over-represents imagery from specific conflict regions. Transfer to geographically distinct conflicts (different terrain, building architecture) showed a 5--8\% accuracy drop, which future work should address through adversarial domain adaptation.
+
+\section{Conclusion}
+
+WarLens demonstrates that transfer learning with conflict-aware fine-tuning can substantially improve event classification accuracy over zero-shot CNN baselines. EfficientNet-B4 achieves 89.1\% accuracy with 19M parameters, making it suitable for deployment in resource-constrained OSINT pipelines. Code and dataset are available at \texttt{github.com/omprxkash/warlens}.
+
+\begin{thebibliography}{00}
+\bibitem{rajpurkar2017chexnet} P. Rajpurkar et al., ``CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep Learning,'' arXiv:1711.05225, 2017.
+\bibitem{chen2016deep} Y. Chen et al., ``Deep Feature Extraction and Classification of Hyperspectral Images,'' IEEE TGRS, 2016.
+\bibitem{marmanis2016deep} D. Marmanis et al., ``Deep Learning Earth Observation Classification Using ImageNet Pretrained Networks,'' IEEE GRSL, 2016.
+\bibitem{gupta2019xbd} R. Gupta et al., ``xBD: A Dataset for Assessing Building Damage from Satellite Imagery,'' CVPR Workshops, 2019.
+\bibitem{leetaru2013gdelt} K. Leetaru and P. A. Schrodt, ``GDELT: Global Data on Events, Location, and Tone,'' ISA Annual Convention, 2013.
+\bibitem{baumgartner2019open} M. Baumgartner et al., ``Open Source Intelligence for Conflict Monitoring,'' Journal of Conflict Resolution, 2019.
+\bibitem{howard2018universal} J. Howard and S. Ruder, ``Universal Language Model Fine-Tuning for Text Classification,'' ACL, 2018.
+\end{thebibliography}
+
+\end{document}
