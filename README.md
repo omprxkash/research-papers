@@ -38,9 +38,11 @@ Full details, abstracts, and per-project notes in [papers/README.md](papers/READ
 
 ## The CLI tool
 
+**CLI (Command Line Interface)** means you run this by typing commands into a terminal — PowerShell, Mac Terminal, or Linux shell. No browser, no GUI, no buttons. You type `ra search "transformers"` and results print directly in your terminal. If you already use `git`, `pip`, or `npm`, you already know what this feels like.
+
 I got tired of losing track of papers. The cycle was always the same: find something interesting on ArXiv, save the tab, forget the tab, re-discover it three weeks later. So I built this.
 
-`ra` is a command-line tool that acts like a research advisor. It searches ArXiv and Semantic Scholar simultaneously, deduplicates the results, and ranks them by relevance. It stores everything locally in a SQLite database so your library is yours — no account, no cloud, no subscription. And when you want more than search results, you can ask Claude to summarize a paper, identify gaps in your literature, or generate a draft review.
+`ra` is a command-line research assistant. It searches ArXiv and Semantic Scholar simultaneously, deduplicates the results, and ranks them by relevance. It stores everything locally in a SQLite database so your library is yours — no account, no cloud, no subscription. And when you want more than search results, you can ask Claude to summarize a paper, identify gaps in your literature, or generate a draft review.
 
 ## What it does
 

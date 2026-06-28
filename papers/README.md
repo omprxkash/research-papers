@@ -1,6 +1,16 @@
 # Research Publications
 
-19 papers across machine learning, NLP, computer vision, medical imaging, cybersecurity, and cloud systems. Each entry links to the PDF and source where available. LaTeX files in this directory use the IEEE Conference template (`\documentclass[conference]{IEEEtran}`) — the same format as the [Overleaf IEEE Conference Template](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn).
+19 papers across machine learning, NLP, computer vision, medical imaging, cybersecurity, and cloud systems.
+
+### Paper format
+
+Every paper here uses the **IEEE Conference format** — the standard format for IEEE-published research papers. If you've seen a published IEEE paper, this is the same two-column layout.
+
+- **Overleaf template** (view online, no install needed): [IEEE Conference Template on Overleaf](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn)
+- **LaTeX class**: `\documentclass[conference]{IEEEtran}` — the IEEEtran document class
+- **Source files**: Each paper in this directory has a `paper.tex` written in that format, ready to open in Overleaf or compile locally with pdflatex
+
+If you want to write your own paper in this format, click the Overleaf link above → Open as Template → start editing. It handles the two-column layout, references, tables, and all IEEE formatting automatically.
 
 ---
 
@@ -274,18 +284,20 @@ A synthesis of three Microsoft Research production systems (TSGen, TRIANGLE, KG-
 
 ## How to compile any .tex file
 
-All `.tex` files in this directory use the IEEE Conference format: `\documentclass[conference]{IEEEtran}`.
+All `.tex` files here use the IEEE Conference format. There are two ways to compile them:
 
-**Overleaf** (recommended — no local install needed):
+### Option 1 — Overleaf (recommended, no install needed)
 
-1. Open the [Overleaf IEEE Conference Template](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn)
-2. Click **Open as Template**
-3. Replace the contents with the `.tex` file from this repo
-4. Click **Recompile**
+Overleaf is a browser-based LaTeX editor. No software to install.
 
-Or import directly from GitHub: Overleaf → New Project → Import from GitHub → select the repo.
+1. Go to [Overleaf IEEE Conference Template](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn)
+2. Click **Open as Template** — this creates a copy in your Overleaf account
+3. Delete the template content and paste in the `.tex` file from this repo
+4. Click **Recompile** — you'll see the formatted PDF on the right
 
-**Local (pdflatex)**:
+Alternatively: Overleaf → **New Project** → **Import from GitHub** → select the relevant repo (for papers that have `.tex` in their own GitHub repo).
+
+### Option 2 — Local (pdflatex)
 
 ```bash
 pdflatex paper.tex
@@ -294,4 +306,6 @@ pdflatex paper.tex
 pdflatex paper.tex
 ```
 
-All templates compile cleanly with no additional packages beyond the standard IEEE set (`cite`, `amsmath`, `graphicx`, `textcomp`, `xcolor`, `algorithmic`).
+Requires a TeX distribution: [TeX Live](https://tug.org/texlive/) (Linux/Windows) or [MacTeX](https://www.tug.org/mactex/) (Mac). Run pdflatex twice after bibtex so cross-references resolve correctly.
+
+Packages used: `cite`, `amsmath`, `amssymb`, `amsfonts`, `algorithmic`, `graphicx`, `textcomp`, `xcolor` — all included in standard TeX Live.
