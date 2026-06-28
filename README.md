@@ -12,7 +12,7 @@ Each paper links to its PDF. Where the LaTeX source exists in the repo, I've lin
 ### Papers
 
 | # | Title | Repo | Paper |
-|---|-------|------|-------|
+|---|-------|---------|-------|
 | 1 | WarLens: Transfer Learning for Event Classification in Conflict Zones | [warlens](https://github.com/omprxkash/warlens) | [PDF](https://github.com/omprxkash/warlens/blob/main/docs/paper/WarLens%20%E2%80%93%20Transfer%20Learning%20for%20Event%20Classification%20in%20Conflict%20Zones.pdf) |
 | 2 | LLM-Augmented OCR for Robust Document Understanding + Patent | [llm-aided-ocr](https://github.com/omprxkash/llm-aided-ocr) | [PDF](https://github.com/omprxkash/llm-aided-ocr/blob/main/docs/research/21BCE1950_53074.pdf) |
 | 3 | Graph-Attention Vision Transformers for CIFAR-100 Classification | [graph-attention-vision-transformers](https://github.com/omprxkash/graph-attention-vision-transformers) | [PDF](https://github.com/omprxkash/graph-attention-vision-transformers/blob/master/paper/GraphAIOps_Conference_Paper.pdf) |
@@ -76,13 +76,11 @@ If you have your own work and want to put it out there, these platforms are free
 
 ## The CLI tool
 
-**CLI (Command Line Interface)** means you run this by typing commands into a terminal — PowerShell, Mac Terminal, or Linux shell. No browser, no GUI, no buttons. You type `ra search "transformers"` and results print directly in your terminal. If you already use `git`, `pip`, or `npm`, you already know what this feels like.
-
-**Who this is for:** researchers, students, and engineers who want a fast terminal-based paper library with AI analysis built in — without signing up for anything or syncing to a cloud.
+I built this for researchers and students who live in the terminal and don't want to sign up for yet another tool.
 
 I got tired of losing track of papers. The cycle was always the same: find something interesting on ArXiv, save the tab, forget the tab, re-discover it three weeks later. So I built this.
 
-`ra` searches ArXiv and Semantic Scholar simultaneously, deduplicates results, and ranks them by relevance. Everything is stored locally in a SQLite database — no account, no cloud, no subscription. For deeper analysis, Claude can summarize papers, identify research gaps, or generate a literature review.
+`ra` searches ArXiv and Semantic Scholar simultaneously, deduplicates results, and ranks them by relevance. Everything is stored locally in a SQLite database — no account, no sync, no subscription. For deeper analysis, there's built-in AI to summarize papers, identify research gaps, and draft literature reviews.
 
 ## Quickstart
 
@@ -91,7 +89,7 @@ pip install -e ".[dev]"
 ra search "transformer attention" --limit 5
 ```
 
-That's it for search. For AI features, add your Anthropic API key to `.env` first (see [Install](#install)).
+That's it for search. For AI features, add your API key to `.env` first (see [Install](#install)).
 
 ## What it does
 
@@ -100,8 +98,8 @@ ra search "transformer attention"      # Search ArXiv + S2, ranked by relevance
 ra search "machine learning" --save    # Save all results to local library
 ra add 1706.03762                      # Save a specific paper by ArXiv ID
 ra read 1                              # Full details for paper #1
-ra summarize 1                         # Claude summarizes: contributions, limitations
-ra gaps "federated learning"           # Claude finds open research questions
+ra summarize 1                         # AI summary: contributions, methodology, limitations
+ra gaps "federated learning"           # Find open research questions in your saved papers
 ra review "graph neural networks"      # Auto-generate a literature review
 ra graph "deep learning"               # Citation network, ranked by PageRank
 ra trend "computer vision"             # Publication counts over years (sparkline)
@@ -124,13 +122,13 @@ Commands:
   add       Save a paper by ArXiv ID or URL.
   dataset   Find datasets on HuggingFace and Papers With Code.
   export    Export library as BibTeX, Markdown, or JSON.
-  gaps      Claude finds open research questions in your saved papers.
+  gaps      Find open research questions across your saved papers.
   graph     Citation network ranked by PageRank.
   list      Browse your saved library.
   read      Full details for a saved paper.
   review    Auto-generate a literature review from saved papers.
   search    Search ArXiv and Semantic Scholar simultaneously.
-  summarize Claude summarizes a paper: contributions, methodology, limits.
+  summarize Summarize a paper: contributions, methodology, limits.
   trend     Publication count over years (sparkline).
 ```
 
@@ -181,7 +179,7 @@ cd research-assistant-cli
 pip install -e ".[dev]"
 
 cp .env.example .env
-# add your ANTHROPIC_API_KEY to .env
+# add your API key to .env
 ```
 
 Tested on Python 3.11 and 3.12. The database is created automatically at `~/.ra/library.db` on first run.
@@ -189,9 +187,9 @@ Tested on Python 3.11 and 3.12. The database is created automatically at `~/.ra/
 ## Prerequisites
 
 - **Python 3.11+** — required
-- **Anthropic API key** — required only for `ra summarize`, `ra gaps`, `ra review`. Search, graph, trend, list, and export work without it. Get one at [console.anthropic.com](https://console.anthropic.com).
+- **API key** — required only for `ra summarize`, `ra gaps`, `ra review`. Search, graph, trend, list, and export work without it.
 - **Internet connection** — required for `ra search`, `ra add`, `ra dataset`. The commands `ra list`, `ra graph`, `ra export`, and `ra trend` (on saved papers) work offline.
-- **Approximate API cost** — `ra summarize` runs ~1,000–3,000 tokens. At Claude Haiku rates that's under $0.01 per paper. `ra gaps` and `ra review` send all abstracts in one prompt — cost scales with library size, typically $0.01–0.05.
+- **Approximate cost** — `ra summarize` runs ~1,000–3,000 tokens, under $0.01 per paper at standard rates. `ra gaps` and `ra review` send all abstracts in one prompt — cost scales with library size, typically $0.01–0.05.
 
 ## How it works
 
@@ -216,7 +214,7 @@ ra graph
   └── Render ASCII table or Mermaid flowchart
 
 ra summarize 1
-  └── Claude prompt → contributions, methodology, limitations → saved to DB
+  └── LLM prompt → contributions, methodology, limitations → saved to DB
 ```
 
 ## Tech stack
@@ -228,7 +226,7 @@ ra summarize 1
 | SQLAlchemy + SQLite | Local-first, zero config, full relational model |
 | httpx | Async HTTP for parallel ArXiv + S2 searches |
 | NetworkX | Citation graph + PageRank |
-| Anthropic SDK | Claude for summarization and gap analysis |
+| LLM API client | AI-powered summarization and gap analysis |
 | pandas | Trend aggregation |
 
 ## The non-obvious parts
@@ -239,5 +237,4 @@ ra summarize 1
 
 **Citation graph**: Directed graph where an edge A→B means "A cites B." Papers with many incoming edges (cited by many other papers) surface to the top via PageRank. The graph auto-densifies: every time you add a paper, its reference list is checked against your library and edges are inserted automatically.
 
-**Gap analysis**: All paper abstracts are sent in a single Claude prompt, not summarized one-by-one. Research gaps only exist relative to the full corpus — you can't identify them by reading papers individually.
-
+**Gap analysis**: All paper abstracts are sent in a single prompt, not summarized one-by-one. Research gaps only exist relative to the full corpus — you can't identify them by reading papers individually.
