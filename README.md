@@ -33,6 +33,7 @@ Each paper links to its PDF. Where the LaTeX source exists in the repo, I've lin
 | 17 | Melanin-Based Skin Analysis Using Digital Image Processing | [melanin-skin-dip](https://github.com/omprxkash/melanin-skin-dip) | [PDF](https://github.com/omprxkash/melanin-skin-dip/blob/main/21BCE1409_21BCE1950_21BCE5148_DA3%28DIP%29.pdf) |
 | 18 | Encrypted Network Traffic Classification Using ML | [network-classification-crypto](https://github.com/omprxkash/network-classification-crypto) | [PDF](https://github.com/omprxkash/network-classification-crypto/blob/main/CRYPTO_REPORT_FINAL.pdf) |
 | 19 | GraphAIOps: Graph-Based AI for Cloud Incident Management | [automated-cloud-incidents](https://github.com/omprxkash/automated-cloud-incidents) | [PDF](https://github.com/omprxkash/automated-cloud-incidents/blob/main/paper/GraphAIOps_Conference_Paper.pdf) |
+| 20 | IEEE RAS VIT Chennai — Computer Vision Workshop | [ieee-ras-workshop](https://github.com/omprxkash/ieee-ras-workshop) | Workshop |
 
 Full details, abstracts, and per-project notes in [papers/README.md](papers/README.md).
 
