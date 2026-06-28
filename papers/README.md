@@ -1,6 +1,6 @@
 # Research Publications
 
-Ten projects across machine learning, NLP, computer vision, cybersecurity, and systems — each with a dedicated IEEE conference paper (LaTeX source in this directory) and implementation in its own repository.
+19 papers across machine learning, NLP, computer vision, medical imaging, cybersecurity, and cloud systems. Each entry links to the PDF and source where available. LaTeX files in this directory use the IEEE Conference template (`\documentclass[conference]{IEEEtran}`) — the same format as the [Overleaf IEEE Conference Template](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn).
 
 ---
 
@@ -17,15 +17,16 @@ Ten projects across machine learning, NLP, computer vision, cybersecurity, and s
 | 7 | [Histopathological Cancer Detection via Patch-Based CNN](#7-cancer-detection) | [histopathological-cancer-detection](https://github.com/omprxkash/histopathological-cancer-detection) | [PDF](https://github.com/omprxkash/histopathological-cancer-detection/blob/main/cancer%20research%20paper.pdf) |
 | 8 | [Neural Texture Stylization Using Deep Feature Representations](#8-texture-stylization) | [texture-model-stylization](https://github.com/omprxkash/texture-model-stylization) | [PDF](https://github.com/omprxkash/texture-model-stylization/blob/master/Neural_Texture_Stylization_Omprakash_2025.pdf) |
 | 9 | [Cross-Lingual Transfer for Low-Resource NLP](#9-multilingual-nlp) | [multilingual-resource-models](https://github.com/omprxkash/multilingual-resource-models) | [.tex](https://github.com/omprxkash/multilingual-resource-models/blob/master/paper/main.tex) |
-| 10 | [AI-Integrated Smart Blood Bank Platform](#10-blood-bank) | [blood-bank-platform](https://github.com/omprxkash/blood-bank-platform) | [paper.tex](blood-bank/paper.tex) ← draft |
-| 11 | [Cardiac Arrhythmia Detection from ECG Signals](#11-arrhythmia-ecg) | [arrhythmia-ecg-classification](https://github.com/omprxkash/arrhythmia-ecg-classification) | [PDF](https://github.com/omprxkash/arrhythmia-ecg-classification/blob/master/paper/arrhythmia_ecg_classification_ieee.pdf) · [.tex](https://github.com/omprxkash/arrhythmia-ecg-classification/blob/master/paper/arrhythmia_classification_ieee.tex) |
-| 12 | [Brain Tumor Segmentation from MRI Using U-Net and Diffusion Models](#12-brain-tumor-segmentation) | [brain-tumor-segmentation](https://github.com/omprxkash/brain-tumor-segmentation) | [PDF](https://github.com/omprxkash/brain-tumor-segmentation/blob/master/paper/brain_tumor_segmentation.pdf) · [.tex](https://github.com/omprxkash/brain-tumor-segmentation/blob/master/paper/paper.tex) |
-| 13 | [ML-Based CAPTCHA Vulnerability Analysis and Robustness Benchmarking](#13-captcha-vulnerability) | [captcha-vulnerability-analysis](https://github.com/omprxkash/captcha-vulnerability-analysis) | [PDF](https://github.com/omprxkash/captcha-vulnerability-analysis/blob/master/paper/captcha_analysis.pdf) · [.tex](https://github.com/omprxkash/captcha-vulnerability-analysis/blob/master/paper/captcha_analysis.tex) |
-| 14 | [Continual Causal Pruning with Fisher Information](#14-continual-causal-pruning) | [continual-causal-pruning](https://github.com/omprxkash/continual-causal-pruning) | [PDF](https://github.com/omprxkash/continual-causal-pruning/blob/master/paper/ContinualCausalPruning_ITW.pdf) · [.tex](https://github.com/omprxkash/continual-causal-pruning/blob/master/paper/paper.tex) |
-| 15 | [Multi-Model Benchmark for Underwater Waste Detection](#15-underwater-waste-detection) | [underwater-waste-detection](https://github.com/omprxkash/underwater-waste-detection) | [PDF](https://github.com/omprxkash/underwater-waste-detection/blob/main/paper.pdf) · [.tex](https://github.com/omprxkash/underwater-waste-detection/blob/main/paper.tex) |
+| 10 | [AI-Integrated Smart Blood Bank Platform](#10-blood-bank) | [blood-bank-platform](https://github.com/omprxkash/blood-bank-platform) | [PDF](https://github.com/omprxkash/blood-bank-platform/blob/main/software.pdf) |
+| 11 | [Cardiac Arrhythmia Detection from ECG Signals](#11-arrhythmia-ecg) | [arrhythmia-ecg-classification](https://github.com/omprxkash/arrhythmia-ecg-classification) | [PDF](https://github.com/omprxkash/arrhythmia-ecg-classification/blob/master/paper/arrhythmia_ecg_classification_ieee.pdf) |
+| 12 | [Brain Tumor Segmentation from MRI Using U-Net and Diffusion Models](#12-brain-tumor-segmentation) | [brain-tumor-segmentation](https://github.com/omprxkash/brain-tumor-segmentation) | [PDF](https://github.com/omprxkash/brain-tumor-segmentation/blob/master/paper/brain_tumor_segmentation.pdf) |
+| 13 | [ML-Based CAPTCHA Vulnerability Analysis and Robustness Benchmarking](#13-captcha-vulnerability) | [captcha-vulnerability-analysis](https://github.com/omprxkash/captcha-vulnerability-analysis) | [PDF](https://github.com/omprxkash/captcha-vulnerability-analysis/blob/master/paper/captcha_analysis.pdf) |
+| 14 | [Continual Causal Pruning with Fisher Information — IEEE ITW](#14-continual-causal-pruning) | [continual-causal-pruning](https://github.com/omprxkash/continual-causal-pruning) | [PDF](https://github.com/omprxkash/continual-causal-pruning/blob/master/paper/ContinualCausalPruning_ITW.pdf) |
+| 15 | [Multi-Model Benchmark for Underwater Waste Detection](#15-underwater-waste-detection) | [underwater-waste-detection](https://github.com/omprxkash/underwater-waste-detection) | [PDF](https://github.com/omprxkash/underwater-waste-detection/blob/main/paper.pdf) |
 | 16 | [Unified Caption Generation, Translation and Summarization](#16-unified-caption-research) | [unified-caption-research](https://github.com/omprxkash/unified-caption-research) | [PDF](https://github.com/omprxkash/unified-caption-research/blob/main/21BCE1950_AI_DA2_PAPER.pdf) |
 | 17 | [Melanin-Based Skin Analysis Using Digital Image Processing](#17-melanin-skin-dip) | [melanin-skin-dip](https://github.com/omprxkash/melanin-skin-dip) | [PDF](https://github.com/omprxkash/melanin-skin-dip/blob/main/21BCE1409_21BCE1950_21BCE5148_DA3%28DIP%29.pdf) |
 | 18 | [Encrypted Network Traffic Classification Using ML](#18-network-classification-crypto) | [network-classification-crypto](https://github.com/omprxkash/network-classification-crypto) | [PDF](https://github.com/omprxkash/network-classification-crypto/blob/main/CRYPTO_REPORT_FINAL.pdf) |
+| 19 | [GraphAIOps: Graph-Based AI for Cloud Incident Management](#19-graphaiops) | [automated-cloud-incidents](https://github.com/omprxkash/automated-cloud-incidents) | [PDF](https://github.com/omprxkash/automated-cloud-incidents/blob/main/paper/GraphAIOps_Conference_Paper.pdf) · [.tex](https://github.com/omprxkash/automated-cloud-incidents/blob/main/paper/paper.tex) |
 
 ---
 
@@ -258,18 +259,39 @@ ML pipeline for classifying encrypted network traffic by application type withou
 
 ---
 
+## 19. GraphAIOps
+
+**GraphAIOps: Unifying Troubleshooting Guide Generation, Multi-Agent Triage, and Graph-Based Root Cause Analysis for Cloud Incident Management**
+
+A synthesis of three Microsoft Research production systems (TSGen, TRIANGLE, KG-Graphlet) into a unified cloud incident management pipeline. TSGen auto-generates troubleshooting guides from historical incident telemetry. TRIANGLE uses multi-agent negotiation to route alerts to the correct engineering team (up to 97% triage accuracy, 91% reduction in time-to-engage). KG-Graphlet builds a Causal Knowledge Graph over post-mortem records and uses graphlet inference to surface root cause hypotheses — improving root cause quality by 45.5% and mitigation suggestions by 131.3% over zero-shot. The paper argues that graph-based knowledge representation is the shared architectural thread connecting all three systems, and shows they form a self-reinforcing feedback loop when run as an integrated pipeline.
+
+- **Repo**: [automated-cloud-incidents](https://github.com/omprxkash/automated-cloud-incidents)
+- **Paper PDF**: [GraphAIOps_Conference_Paper.pdf](https://github.com/omprxkash/automated-cloud-incidents/blob/main/paper/GraphAIOps_Conference_Paper.pdf)
+- **LaTeX source**: [paper.tex](https://github.com/omprxkash/automated-cloud-incidents/blob/main/paper/paper.tex)
+- **References**: [paper.bib](https://github.com/omprxkash/automated-cloud-incidents/blob/main/paper/paper.bib)
+
+---
+
 ## How to compile any .tex file
 
+All `.tex` files in this directory use the IEEE Conference format: `\documentclass[conference]{IEEEtran}`.
+
+**Overleaf** (recommended — no local install needed):
+
+1. Open the [Overleaf IEEE Conference Template](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn)
+2. Click **Open as Template**
+3. Replace the contents with the `.tex` file from this repo
+4. Click **Recompile**
+
+Or import directly from GitHub: Overleaf → New Project → Import from GitHub → select the repo.
+
+**Local (pdflatex)**:
+
 ```bash
-# Using pdflatex (local)
 pdflatex paper.tex
 bibtex paper
 pdflatex paper.tex
 pdflatex paper.tex
-
-# Using Overleaf
-# Upload paper.tex → Project → Compile
-# Template: IEEE Conference (IEEEtran)
 ```
 
-All templates use `\documentclass[conference]{IEEEtran}` and compile cleanly on Overleaf with no additional packages beyond the standard IEEE set.
+All templates compile cleanly with no additional packages beyond the standard IEEE set (`cite`, `amsmath`, `graphicx`, `textcomp`, `xcolor`, `algorithmic`).
