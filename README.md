@@ -38,6 +38,42 @@ Full details, abstracts, and per-project notes in [papers/README.md](papers/READ
 
 ---
 
+## Citing this work
+
+All 20 papers are available as a single BibTeX file: **[citations.bib](citations.bib)**
+
+Download it and import into any reference manager:
+
+**Overleaf** — upload `citations.bib` to your project, then add `\bibliography{citations}` at the end of your document and `\bibliographystyle{IEEEtran}` (or any style you prefer). Cite with `\cite{pugazhendhi2025warlens}` etc.
+
+**Zotero / Mendeley** — File → Import → BibTeX, select `citations.bib`. All entries appear in your library instantly.
+
+**Direct cite key format:** `pugazhendhi<year><keyword>` — e.g. `pugazhendhi2025gatvit`, `pugazhendhi2024ner`, `pugazhendhi2023cancer`.
+
+---
+
+## Where to publish research
+
+If you have your own work and want to put it out there, these platforms are free and don't require institutional affiliation:
+
+| Platform | What it's for | Link |
+|---|---|---|
+| **arXiv** | Preprints in CS, ML, physics, math. Most widely read. Free to submit. | [arxiv.org](https://arxiv.org) |
+| **Zenodo** | Upload anything — paper, dataset, code, notebook. Gives you a DOI instantly. Backed by CERN. | [zenodo.org](https://zenodo.org) |
+| **ResearchGate** | Academic social network. Upload your PDF, connect with others in the same area. | [researchgate.net](https://www.researchgate.net) |
+| **Academia.edu** | Similar to ResearchGate. Good for discoverability. | [academia.edu](https://www.academia.edu) |
+| **OSF** | Open Science Framework. Good for project pages, preregistrations, and datasets alongside papers. | [osf.io](https://osf.io) |
+| **SSRN** | Popular for early-stage CS and interdisciplinary work. | [ssrn.com](https://www.ssrn.com) |
+| **IEEE Xplore / ACM DL** | Formal conference/journal papers only — you submit to a conference first, it appears here after acceptance. | [ieeexplore.ieee.org](https://ieeexplore.ieee.org) |
+
+**The fastest path to a DOI with no review process:** upload your PDF to Zenodo. It takes five minutes, gives you a permanent `doi.org/10.5281/zenodo.XXXXXXX` link, and makes your work citable in any reference manager immediately.
+
+**If you want peer review:** submit to arXiv first (no review, instant), then submit the same paper to a conference or journal for formal review. arXiv submission does not count as prior publication for IEEE or ACM.
+
+**Writing in LaTeX?** [Overleaf](https://overleaf.com) is the standard free browser-based LaTeX editor. IEEE and ACM both provide official templates there — search "IEEE conference" or "ACM" in the Overleaf template gallery.
+
+---
+
 ## The CLI tool
 
 **CLI (Command Line Interface)** means you run this by typing commands into a terminal — PowerShell, Mac Terminal, or Linux shell. No browser, no GUI, no buttons. You type `ra search "transformers"` and results print directly in your terminal. If you already use `git`, `pip`, or `npm`, you already know what this feels like.
