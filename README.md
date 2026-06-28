@@ -1,5 +1,7 @@
 # research-assistant-cli
 
+![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)
+
 ## Research
 
 I'm Omprakash Pugazhendhi — B.Tech CSE at VIT Chennai (2021–2025). Over four years I worked on 19 research projects spanning machine learning, NLP, computer vision, medical imaging, cybersecurity, and cloud systems. Most of them came out of coursework, capstone projects, and independent work I did alongside my degree.
@@ -25,7 +27,7 @@ Each paper links to its PDF. Where the LaTeX source exists in the repo, I've lin
 | 11 | Cardiac Arrhythmia Detection and Multi-Class Classification from ECG | [arrhythmia-ecg-classification](https://github.com/omprxkash/arrhythmia-ecg-classification) | [PDF](https://github.com/omprxkash/arrhythmia-ecg-classification/blob/master/paper/arrhythmia_ecg_classification_ieee.pdf) |
 | 12 | Brain Tumor Segmentation from MRI Using U-Net and Diffusion Models | [brain-tumor-segmentation](https://github.com/omprxkash/brain-tumor-segmentation) | [PDF](https://github.com/omprxkash/brain-tumor-segmentation/blob/master/paper/brain_tumor_segmentation.pdf) |
 | 13 | ML-Based CAPTCHA Vulnerability Analysis and Robustness Benchmarking | [captcha-vulnerability-analysis](https://github.com/omprxkash/captcha-vulnerability-analysis) | [PDF](https://github.com/omprxkash/captcha-vulnerability-analysis/blob/master/paper/captcha_analysis.pdf) |
-| 14 | Continual Causal Pruning with Fisher Information — ITW submission | [continual-causal-pruning](https://github.com/omprxkash/continual-causal-pruning) | [PDF](https://github.com/omprxkash/continual-causal-pruning/blob/master/paper/ContinualCausalPruning_ITW.pdf) |
+| 14 | Continual Causal Pruning with Fisher Information — IEEE ITW | [continual-causal-pruning](https://github.com/omprxkash/continual-causal-pruning) | [PDF](https://github.com/omprxkash/continual-causal-pruning/blob/master/paper/ContinualCausalPruning_ITW.pdf) |
 | 15 | Multi-Model Benchmark for Underwater Waste Detection | [underwater-waste-detection](https://github.com/omprxkash/underwater-waste-detection) | [PDF](https://github.com/omprxkash/underwater-waste-detection/blob/main/paper.pdf) |
 | 16 | Unified Caption Generation, Translation and Summarization | [unified-caption-research](https://github.com/omprxkash/unified-caption-research) | [PDF](https://github.com/omprxkash/unified-caption-research/blob/main/21BCE1950_AI_DA2_PAPER.pdf) |
 | 17 | Melanin-Based Skin Analysis Using Digital Image Processing | [melanin-skin-dip](https://github.com/omprxkash/melanin-skin-dip) | [PDF](https://github.com/omprxkash/melanin-skin-dip/blob/main/21BCE1409_21BCE1950_21BCE5148_DA3%28DIP%29.pdf) |
@@ -40,9 +42,20 @@ Full details, abstracts, and per-project notes in [papers/README.md](papers/READ
 
 **CLI (Command Line Interface)** means you run this by typing commands into a terminal — PowerShell, Mac Terminal, or Linux shell. No browser, no GUI, no buttons. You type `ra search "transformers"` and results print directly in your terminal. If you already use `git`, `pip`, or `npm`, you already know what this feels like.
 
+**Who this is for:** researchers, students, and engineers who want a fast terminal-based paper library with AI analysis built in — without signing up for anything or syncing to a cloud.
+
 I got tired of losing track of papers. The cycle was always the same: find something interesting on ArXiv, save the tab, forget the tab, re-discover it three weeks later. So I built this.
 
-`ra` is a command-line research assistant. It searches ArXiv and Semantic Scholar simultaneously, deduplicates the results, and ranks them by relevance. It stores everything locally in a SQLite database so your library is yours — no account, no cloud, no subscription. And when you want more than search results, you can ask Claude to summarize a paper, identify gaps in your literature, or generate a draft review.
+`ra` searches ArXiv and Semantic Scholar simultaneously, deduplicates results, and ranks them by relevance. Everything is stored locally in a SQLite database — no account, no cloud, no subscription. For deeper analysis, Claude can summarize papers, identify research gaps, or generate a literature review.
+
+## Quickstart
+
+```bash
+pip install -e ".[dev]"
+ra search "transformer attention" --limit 5
+```
+
+That's it for search. For AI features, add your Anthropic API key to `.env` first (see [Install](#install)).
 
 ## What it does
 
@@ -61,6 +74,69 @@ ra list                                # Browse your library
 ra export --format bibtex              # Export as BibTeX / Markdown / JSON
 ```
 
+**`ra --help` output:**
+
+```
+Usage: ra [OPTIONS] COMMAND [ARGS]...
+
+  Research assistant CLI — local paper library with AI analysis.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  add       Save a paper by ArXiv ID or URL.
+  dataset   Find datasets on HuggingFace and Papers With Code.
+  export    Export library as BibTeX, Markdown, or JSON.
+  gaps      Claude finds open research questions in your saved papers.
+  graph     Citation network ranked by PageRank.
+  list      Browse your saved library.
+  read      Full details for a saved paper.
+  review    Auto-generate a literature review from saved papers.
+  search    Search ArXiv and Semantic Scholar simultaneously.
+  summarize Claude summarizes a paper: contributions, methodology, limits.
+  trend     Publication count over years (sparkline).
+```
+
+## Typical workflow
+
+**Writing a paper:**
+```bash
+ra search "federated learning privacy" --save   # collect relevant papers
+ra gaps "federated learning"                    # what's still open?
+ra review "federated learning"                  # draft a literature review
+ra export --format bibtex                       # get BibTeX for your reference manager
+```
+
+**Staying current on a topic:**
+```bash
+ra search "diffusion models" --limit 20         # run weekly
+ra trend "diffusion models"                     # is this area growing or peaking?
+ra graph "diffusion models"                     # which papers are most cited?
+```
+
+**Going deep on one paper:**
+```bash
+ra add 2301.12503                               # save by ArXiv ID
+ra summarize 1                                  # contributions, methodology, limitations
+ra read 1                                       # full abstract, authors, citation count
+```
+
+## How it compares
+
+| | `ra` | Zotero | Mendeley | Google Scholar |
+|---|---|---|---|---|
+| Terminal / CLI | ✓ | | | |
+| No account needed | ✓ | | | requires Google |
+| Fully local / offline (saved papers) | ✓ | | | |
+| AI summarization + gap analysis | ✓ | | | |
+| Citation graph + PageRank | ✓ | | | |
+| PDF annotation and management | | ✓ | ✓ | |
+| Browser extension | | ✓ | ✓ | ✓ |
+| Team / collaboration features | | ✓ | ✓ | |
+
+`ra` is not a replacement for Zotero — it's a complement. Use `ra` when you're in the terminal doing research, use Zotero when you need PDF management or browser capture.
+
 ## Install
 
 ```bash
@@ -72,7 +148,14 @@ cp .env.example .env
 # add your ANTHROPIC_API_KEY to .env
 ```
 
-Requires Python 3.11+. The database lives at `~/.ra/library.db` — it's created automatically on first run.
+Tested on Python 3.11 and 3.12. The database is created automatically at `~/.ra/library.db` on first run.
+
+## Prerequisites
+
+- **Python 3.11+** — required
+- **Anthropic API key** — required only for `ra summarize`, `ra gaps`, `ra review`. Search, graph, trend, list, and export work without it. Get one at [console.anthropic.com](https://console.anthropic.com).
+- **Internet connection** — required for `ra search`, `ra add`, `ra dataset`. The commands `ra list`, `ra graph`, `ra export`, and `ra trend` (on saved papers) work offline.
+- **Approximate API cost** — `ra summarize` runs ~1,000–3,000 tokens. At Claude Haiku rates that's under $0.01 per paper. `ra gaps` and `ra review` send all abstracts in one prompt — cost scales with library size, typically $0.01–0.05.
 
 ## How it works
 
